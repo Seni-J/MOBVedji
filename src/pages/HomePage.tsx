@@ -1,5 +1,6 @@
 import React from 'react';
 import {View, Text, Button} from 'react-native';
+import {getTokenStorage} from './data/UserData';
 
 const HomePage = ({navigation}) => {
   return (

@@ -1,29 +1,33 @@
-import React from 'react';
+import React,{useState} from 'react';
 import {View, TextInput, Text, Button, SafeAreaView, StyleSheet} from 'react-native';
 import {Formik} from 'formik';
-import axios from 'axios';
-import AsyncStorage from '@react-native-community/async-storage';
-import {UserData} from './data/UserData'
+import {getTokenStorage,setTokenStorage,getUser} from './data/UserData'
 
 
 
 const LoginPage = ({navigation}) => {
-  UserData.getToken().then(to => {console.log(to)})
+  const [token, setToken] = useState()
+  getTokenStorage().then(token => {setToken(token)})
+  
   return(
     <Formik
-    initialValues={{token: ''}}
-    onSubmit={values =>
-      axios
-        .get('http://192.168.1.125:8000/api/me', {
-          headers: {Authorization: 'Bearer ' + values.token},
+    initialValues={{token: token}}
+    enableReinitialize={true}
+    onSubmit={async (values) =>{ 
+      const user = await getUser(values.token)
+      console.log(user)
+      if(!user.error){
+        alert("Bienvenue, " + user.firstname + " " + user.lastname)
+        setTokenStorage(values.token)
+        getTokenStorage().then(token=>{
+          setToken(token)
         })
-        .then(res => {
-          console.log(res.data)
-          UserData.setToken(values.token)
-          getToken()
-          alert("Bienvenue, " + res.data.data.firstname + " " + res.data.data.lastname)
-        })
-        .catch(error => console.log(error))
+      }
+      else{
+        alert("Token incorrect")
+        setToken("Token incorrect")
+      }
+    }
     }>
     {({handleChange, handleBlur, handleSubmit, values}) => (
       <SafeAreaView>
@@ -33,11 +37,10 @@ const LoginPage = ({navigation}) => {
             onChangeText={handleChange('token')}
             onBlur={handleBlur('token')}
             placeholder="Rentrez le token de connexion"
-            secureTextEntry
             value={values.token}
           />
           <Button onPress={handleSubmit} title="Login" />
-          <Text>Token:</Text>
+          <Text>Token: {token}</Text>
           
         </View>
       </SafeAreaView>

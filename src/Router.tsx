@@ -1,20 +1,60 @@
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import Icon from 'react-native-elements';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
+import ProfilePage from './pages/profile/ProfilePage';
+import {getTokenStorage, getUser} from './pages/data/UserData';
 
 const Stack = createStackNavigator();
+const Tab = createBottomTabNavigator();
 
 export default function Router() {
-  return (
-    <NavigationContainer>
+
+  let nav = (
       <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={HomePage} options={{title: "Page d'accueil"}}/>
         <Stack.Screen name="Login" component={LoginPage} options={{title: "Page de connexion"}}/>
         <Stack.Screen name="Register" component={RegisterPage} options={{title: "Page d'inscription"}}/>
+        <Stack.Screen name="Profile" component={ProfilePage} options={{title: "Profil"}}/>
       </Stack.Navigator>
+  );
+
+  getTokenStorage().then(token => {
+    if(token){
+      nav = (
+        <Tab.Navigator initialRouteName={'Profile'} tabBarOptions={{showLabel: false}}>
+          <Tab.Screen
+            name="Register"
+            component={RegisterPage}
+            options={{
+            }}
+          />
+          <Tab.Screen
+            name="Panier"
+            component={RegisterPage}
+            options={{
+              
+            }}
+          />
+          <Tab.Screen
+            name="Profile"
+            component={ProfilePage}
+            options={{
+              
+            }}
+          />
+        </Tab.Navigator>
+      );
+    }
+  })
+
+  return (
+    <NavigationContainer>
+      {nav}
     </NavigationContainer>
   );
 }
