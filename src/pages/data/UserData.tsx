@@ -1,4 +1,4 @@
-import {React} from 'react';
+import React from 'react';
 import axios, { AxiosResponse } from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 
@@ -20,6 +20,7 @@ export const setTokenStorage = async(val:string) => {
 export const getTokenStorage = async () => {
     return await AsyncStorage.getItem('@token')
 }
+
 export const getUser = async (token) =>{
    const response = await axios.get('http://192.168.1.125:8000/api/me', {
       headers: {Authorization: 'Bearer ' + token},

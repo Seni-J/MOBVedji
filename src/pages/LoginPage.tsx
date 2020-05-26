@@ -25,7 +25,7 @@ const LoginPage = ({navigation}) => {
       }
       else{
         alert("Token incorrect")
-        setToken("Token incorrect")
+        /*setToken("Token incorrect")*/
       }
     }
     }>

@@ -6,7 +6,7 @@ import Icon from 'react-native-elements';
 import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
-import ProfilePage from './pages/profile/ProfilePage';
+import ProfilePage from './pages/ProfilePage';
 import {getTokenStorage, getUser} from './pages/data/UserData';
 
 const Stack = createStackNavigator();
