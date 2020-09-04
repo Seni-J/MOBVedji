@@ -22,7 +22,7 @@ export const getTokenStorage = async () => {
 }
 
 export const getUser = async (token) =>{
-   const response = await axios.get('http://192.168.1.125:8000/api/me', {
+   const response = await axios.get('http://10.229.32.175:8000/api/me', {
       headers: {Authorization: 'Bearer ' + token},
     })
     if(response.data)
@@ -34,6 +34,21 @@ export const getUser = async (token) =>{
             "error": response
         }
     }
-   
 }
+
+export const getProducts = async (token) =>{
+    const response = await axios.get('http://10.229.32.175:8000/api/products', {
+       headers: {Authorization: 'Bearer ' + token},
+     }) 
+     if(response.data)
+     {
+         return response.data.data
+     }
+     else{
+         return {
+             "error": response
+         }
+     }
+    
+ }
  

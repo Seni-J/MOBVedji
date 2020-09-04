@@ -31,7 +31,7 @@ const RegisterPage = ({navigation}) => {
       validationSchema={SignupSchema}
       onSubmit={values =>
         axios
-          .post('http://192.168.1.125:8000/api/user/apply', values)
+          .post('http://10.229.32.175:8000/api/user/apply', values)
           .then(res => {
             alert("L'inscription a été effectuée ! Merci de patienter pour l'envoi de votre jeton de connexion.");
             console.log(res);

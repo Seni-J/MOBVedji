@@ -7,6 +7,7 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
+import ProductListPage from './pages/ProductListPage'
 import {getTokenStorage, getUser} from './pages/data/UserData';
 
 const Stack = createStackNavigator();
@@ -29,8 +30,8 @@ export default function Router() {
     nav = (
       <Tab.Navigator initialRouteName="Profile">
         <Tab.Screen
-          name="Register"
-          component={RegisterPage}
+          name="Produits"
+          component={ProductListPage}
           options={{
           }}
         />
