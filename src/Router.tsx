@@ -7,7 +7,8 @@ import HomePage from './pages/HomePage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
-import ProductListPage from './pages/ProductListPage'
+import ProductListPage from './pages/ProductListPage';
+import ProductDetailsPage from './pages/ProductDetailsPage';
 import {getTokenStorage, getUser} from './pages/data/UserData';
 
 const Stack = createStackNavigator();
@@ -23,6 +24,7 @@ export default function Router() {
       <Stack.Screen name="Login" component={LoginPage} options={{title: "Page de connexion"}}/>
       <Stack.Screen name="Register" component={RegisterPage} options={{title: "Page d'inscription"}}/>
       <Stack.Screen name="Profile" component={ProfilePage} options={{title: "Profil"}}/>
+      <Stack.Screen name="Details" component={ProductDetailsPage} options={{title: "Detail du produit"}}/>
     </Stack.Navigator>
   );
 

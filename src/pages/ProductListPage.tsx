@@ -26,7 +26,7 @@ const ProductListPage = ({navigation}) => {
                 renderItem={({item}) => 
                     <ListItem
                     title={item.name}
-                    subtitle={`Prix: ${item.price} CHF`}
+                    subtitle={`Stock: ${item.stock} | Unité: ${item.unit} | Prix: ${item.price} CHF`}
                     leftAvatar={{source: {uri:'http://10.229.32.175:8000/storage/pictures/'+item.picture}}}
                     onPress={() => {
                         navigation.navigate('Details', {id: item.id});
