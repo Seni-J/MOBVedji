@@ -15,7 +15,7 @@ const ProductDetailsPage = ({route,navigation}) => {
         console.log(Array.isArray(product))
         getTokenStorage().then(token => {setToken(token)})
         getProductDetails(token,id).then(res => {
-            setProduct(res) 
+            setProduct(res)
         })
     }
 
@@ -23,9 +23,25 @@ const ProductDetailsPage = ({route,navigation}) => {
         <View>
         {product != null ? (
             <Card title={product.name} image={{uri:'http://10.229.32.175:8000/storage/pictures/'+ product.picture}}>
-            <Text>{product.details}</Text>
-            <Text>{`stock: ${product.stock}, prix: ${product.price} CHF`}</Text>
+                <Text>{product.details}</Text>
+                <Text>{`stock: ${product.stock}, prix: ${product.price} CHF`}</Text>
+                {Array.length(product.suppliers) > 0 ? (
+                <Card title="Fournisseurs">
+                    {
+                    product.suppliers.map((supplier, i) => {
+                        return (
+                        <View key={i}>
+                            <Text>{`Nom de l'entreprise: ${supplier.company_name}`}</Text>
+                            <Text>{`Ville: ${supplier.city}`}</Text>
+                        </View>
+                        );
+                    })
+                    }
+                </Card>
+                ) : <Card title="Fournisseurs"><Text>Pas de fournisseur disponible</Text></Card>
+            }
             </Card>
+            
         ) :<ActivityIndicator/> }
         </View>
     );

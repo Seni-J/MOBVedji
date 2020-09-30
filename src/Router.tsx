@@ -14,7 +14,7 @@ import {getTokenStorage, getUser} from './pages/data/UserData';
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
-function MainStackScreen() {
+function ProductsStackScreen() {
  return (
   <Stack.Navigator initialRouteName="Products">
     <Stack.Screen name="Products" component={ProductListPage} options={{title: "Produits"}}/>
@@ -40,7 +40,7 @@ export default function Router() {
       <Tab.Navigator initialRouteName="Profil">
         <Tab.Screen
           name="Produits"
-          component={MainStackScreen}
+          component={ProductsStackScreen}
           options={{
             tabBarIcon: () => (
               <Icon name="apple-alt" size={24} />
