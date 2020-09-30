@@ -52,6 +52,7 @@ export const getProducts = async (token) =>{
  }
  
  export const getProductDetails = async (token,id) =>{
+     console.log('http://10.229.32.175:8000/api/products/' + id)
     const response = await axios.get('http://10.229.32.175:8000/api/products/' + id, {
        headers: {Authorization: 'Bearer ' + token},
      }) 
