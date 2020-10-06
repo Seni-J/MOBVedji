@@ -12,7 +12,6 @@ const ProductDetailsPage = ({route,navigation}) => {
     const [product, setProduct] = useState()
 
     if(product == null){
-        console.log(Array.isArray(product))
         getTokenStorage().then(token => {setToken(token)})
         getProductDetails(token,id).then(res => {
             setProduct(res)
@@ -21,11 +20,11 @@ const ProductDetailsPage = ({route,navigation}) => {
 
     return(
         <View>
-        {product != null ? (
+        {product != null && !Object.keys(product).includes("error") ? (
             <Card title={product.name} image={{uri:'http://10.229.32.175:8000/storage/pictures/'+ product.picture}}>
                 <Text>{product.details}</Text>
                 <Text>{`stock: ${product.stock}, prix: ${product.price} CHF`}</Text>
-                {Array.length(product.suppliers) > 0 ? (
+                {product.suppliers != null && product.suppliers.length > 0 ? (
                 <Card title="Fournisseurs">
                     {
                     product.suppliers.map((supplier, i) => {

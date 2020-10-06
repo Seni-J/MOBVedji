@@ -35,7 +35,6 @@ const ProfilePage = ({navigation}) => {
   });
 
   if(loading && user){
-    console.log(user)
     userInfo = (
       <>
         <Text style={styles.baseText}>Bonjour</Text>
