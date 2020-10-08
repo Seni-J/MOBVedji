@@ -2,7 +2,9 @@ import React from 'react';
 import axios, { AxiosResponse } from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 
-// Gère l'erreur 401 avec un interceptor, à déplacer dans un fichier config axios que tu importera dans index.tsx 
+
+const api = "http://10.229.32.175:8000/"
+
 axios.interceptors.response.use( (response) =>{
     return response;
 },  (error) =>{
@@ -22,7 +24,7 @@ export const getTokenStorage = async () => {
 }
 
 export const getUser = async (token) =>{
-   const response = await axios.get('http://10.229.32.175:8000/api/me', {
+   const response = await axios.get(api + 'api/me', {
       headers: {Authorization: 'Bearer ' + token},
     })
     if(response.data)
@@ -37,7 +39,7 @@ export const getUser = async (token) =>{
 }
 
 export const getProducts = async (token) =>{
-    const response = await axios.get('http://10.229.32.175:8000/api/products', {
+    const response = await axios.get(api + 'api/products', {
        headers: {Authorization: 'Bearer ' + token},
      }) 
      if(response.data)
@@ -52,7 +54,7 @@ export const getProducts = async (token) =>{
  }
  
  export const getProductDetails = async (token,id) =>{
-    const response = await axios.get('http://10.229.32.175:8000/api/products/' + id, {
+    const response = await axios.get(api + 'api/products/' + id, {
        headers: {Authorization: 'Bearer ' + token},
      }) 
      if(response.data)

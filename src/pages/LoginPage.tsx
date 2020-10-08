@@ -22,6 +22,7 @@ const LoginPage = ({navigation}) => {
         getTokenStorage().then(token=>{
           setToken(token)
         })
+        navigation.navigate('Profil');
       }
       else{
         alert("Token incorrect")
