@@ -9,6 +9,7 @@ import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
 import ProductListPage from './pages/ProductListPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
+import BasketPage from './pages/BasketPage';
 import {getTokenStorage, getUser} from './pages/data/UserData';
 
 const Stack = createStackNavigator();
@@ -49,7 +50,7 @@ export default function Router() {
         />
         <Tab.Screen
           name="Panier"
-          component={RegisterPage}
+          component={BasketPage}
           options={{
             tabBarIcon: () => (
               <Icon name="shopping-basket" size={24}  />
