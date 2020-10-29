@@ -1,17 +1,22 @@
-import React from 'react';
+import React,{useState} from 'react';
 import axios, { AxiosResponse } from 'axios';
 import AsyncStorage from '@react-native-community/async-storage';
 
-/*export const setBasketStorage = async(val) => {
-    AsyncStorage.setItem('basket', JSON.stringify(val))
-}*/
+var basket
 
 export const getBasketStorage = async () => {
-    return JSON.parse(await AsyncStorage.getItem('basket'))
+    basket = JSON.parse(await AsyncStorage.getItem('basket'))
+    return basket
 }
 
 export const removeBasket = async() => {
     await AsyncStorage.setItem('basket', JSON.stringify([]))
+}
+
+export const removeProductFromBasket = async(product) => {
+    var newBasket=basket.filter(({id}) => id != product.id)
+    basket = newBasket
+    await AsyncStorage.setItem('basket', JSON.stringify(newBasket))
 }
 
 export const addProductToBasket = async(product) => {
@@ -22,5 +27,6 @@ export const addProductToBasket = async(product) => {
     }
 
     product.quantity = 1
+    
     AsyncStorage.setItem('basket', JSON.stringify([...basket, product]))
 }
