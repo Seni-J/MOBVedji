@@ -106,6 +106,7 @@ const BasketPage = ({navigation}) => {
             >
                 <Text style={{color:"black"}}>Valider le panier</Text>
             </TouchableOpacity>
+            <Text style={{textAlign:"center",fontSize:18}}>{`Prix total: ${price} CHF`}</Text>
             </View>
         </View>
     );
