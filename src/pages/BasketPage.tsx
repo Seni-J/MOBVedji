@@ -24,6 +24,7 @@ const BasketPage = ({navigation}) => {
         getTokenStorage().then(token => {setToken(token)})
     }else{
       if(products.length <= 0){
+        basketContainer.restoreBasket()
         getProductList()
       }
     }
