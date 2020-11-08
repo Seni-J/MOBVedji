@@ -16,12 +16,18 @@ const BasketPage = ({navigation}) => {
 
     useEffect(() => {
         getProductList();
+        calculatePrice();
+        validateBasket();
       },[basketContainer.basket]);
 
     if(!token){
         getTokenStorage().then(token => {setToken(token)})
+    }else{
+      if(products.length <= 0){
+        getProductList()
+      }
     }
-
+    
     async function getProductList(){
         getProducts(token).then(res => {
             let productList = res.filter(product => {
@@ -63,8 +69,10 @@ const BasketPage = ({navigation}) => {
               <Text>{item.unit}</Text>
             </View>
             <TextInput
+              placeholderTextColor="rgb(180, 180, 180)"
               keyboardType="numeric"
               value={item.quantity.toString()}
+              onChangeText={number => basketContainer.changeQuantityProduct(number,item)}
             />
             <Button
                 onPress={() => { basketContainer.deleteProductBasket(item)}}
