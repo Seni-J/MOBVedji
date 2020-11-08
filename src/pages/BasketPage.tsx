@@ -1,47 +1,61 @@
 import React,{useEffect, useState} from 'react';
 import {View, Text, TextInput, Button, FlatList, ActivityIndicator, TouchableOpacity} from 'react-native';
 import {Header, ListItem} from 'react-native-elements';
-import {getBasketStorage, addProductToBasket, removeProductFromBasket} from './data/BasketData'
+import {BasketContainer} from './data/containers/';
 import {getTokenStorage, getProducts} from './data/UserData'
 import {Picker} from '@react-native-picker/picker'
+import axios, { AxiosResponse } from 'axios';
 
 
 const BasketPage = ({navigation}) => {
+    const basketContainer = BasketContainer.useContainer();
     const [token, setToken] = useState()
-    const [basket, setBasket] = useState()
-    const [products, setProducts] = useState()
+    const [products, setProducts] = useState([])
+    const [price, setPrice] = useState(0);
+    const [validate, setValidate] = useState(false);
 
+    useEffect(() => {
+        getProductList();
+      },[basketContainer.basket]);
 
-    if(!Array.isArray(basket)){
-        getBasketStorage().then(res => {setBasket(res)})
-        console.log(basket)
-    }
-
-    if(!Array.isArray(products)){
+    if(!token){
         getTokenStorage().then(token => {setToken(token)})
+    }
 
+    async function getProductList(){
         getProducts(token).then(res => {
             let productList = res.filter(product => {
-                return !basket.find(({ id }) => product.id == id)
+                return !basketContainer.basket.find(({ id }) => product.id == id)
               })
             setProducts(productList) 
         })
     }
 
-    function refreshBasket(){
-        getBasketStorage().then(res => {setBasket(res)})
-        getProducts(token).then(res => {
-            let productList = res.filter(product => {
-                return !basket.find(({ id }) => product.id == id)
-              })
-            setProducts(productList) 
-        })
+    function calculatePrice()
+    {
+      var newPrice = 0;
+      basketContainer.basket.forEach(product =>{
+        newPrice+=(product.quantity * product.price)
+      })
+      setPrice(newPrice.toFixed(2));
+    }
+    function validateBasket()
+    {
+      setValidate(false)
+      if(basketContainer.basket.length){
+        setValidate(true)
+      }
+      basketContainer.basket.forEach(product=>{
+         if(product.quantity <= 0){
+          setValidate(false)
+         }
+      })
     }
 
     return(
         <View>
             <FlatList
-        data={basket}
+        data={basketContainer.basket}
         renderItem={({item}) => (
         <View>
             <View >
@@ -53,7 +67,7 @@ const BasketPage = ({navigation}) => {
               value={item.quantity.toString()}
             />
             <Button
-                onPress={() => {removeProductFromBasket(item) }}
+                onPress={() => { basketContainer.deleteProductBasket(item)}}
                 title="Supprimer"
               />
         </View>
@@ -61,13 +75,12 @@ const BasketPage = ({navigation}) => {
         keyExtractor={item => String(item.id)}
       />
             <View>
-            {!Array.isArray(products) ? <ActivityIndicator/> : (  
+            {products.length <= 0 ? <ActivityIndicator/> : (  
                 <Picker
                 selectedValue={"-1"}
                 onValueChange={(itemValue, itemIndex) => {
-                    addProductToBasket(products[itemValue])
-                    console.log(basket)
-                    } 
+                    basketContainer.addProduct(products[itemValue]);
+                } 
                 }
                 >
                 <Picker.Item label="Veuillez choisir un produit" value="-1" />

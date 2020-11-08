@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import {View, Text, StyleSheet} from 'react-native';
+import {View, Text, StyleSheet,Button} from 'react-native';
 import axios from 'axios';
 import {getUser, getTokenStorage} from './data/UserData';
+import AsyncStorage from '@react-native-community/async-storage';
 
 const ProfilePage = ({navigation}) => {
   const [user, setUser] = useState()
@@ -34,6 +35,14 @@ const ProfilePage = ({navigation}) => {
     }
   });
 
+  const clearAppData = async function() {
+    try {
+        const keys = await AsyncStorage.getAllKeys();
+        await AsyncStorage.multiRemove(keys);
+    } catch (error) {
+        console.error('Error clearing app data.');
+    }
+}
   if(loading && user){
     userInfo = (
       <>
@@ -46,6 +55,7 @@ const ProfilePage = ({navigation}) => {
   return (
     <View>
       {userInfo}
+      <Button onPress={clearAppData} title="Clear Local Storage" />
     </View>
     ); 
 };
