@@ -18,13 +18,12 @@ export const useStockContainer = () => {
   }
 
   function validateNewStock(token){
-      const res = {
-          'quantities' : vals
+      var res = {
+          quantities : vals
       }
-
-      console.log(res)
+      console.log(JSON.stringify({quantities: vals}))
     axios
-    .post('http://10.229.32.175:8000/api/products/stock', JSON.stringify(res), {
+    .post('http://10.229.32.175:8000/api/products/stock', JSON.stringify({quantities: vals}), {
         headers: {Authorization: 'Bearer ' + token},
     })
     .then(res => {
