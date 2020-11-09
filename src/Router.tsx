@@ -9,6 +9,7 @@ import RegisterPage from './pages/RegisterPage';
 import ProfilePage from './pages/ProfilePage';
 import ProductListPage from './pages/ProductListPage';
 import ProductDetailsPage from './pages/ProductDetailsPage';
+import StocksPage from './pages/StocksPage';
 import BasketPage from './pages/BasketPage';
 import {getTokenStorage, getUser} from './pages/data/UserData';
 import {BasketContainer} from './pages/data/containers';
@@ -25,10 +26,19 @@ function ProductsStackScreen() {
   );
 }
 
+function ProfileStackScreen() {
+  return (
+   <Stack.Navigator initialRouteName="Profil">
+     <Stack.Screen name="Profil" component={ProfilePage} options={{title: "Profil"}}/>
+     <Stack.Screen name="Stocks" component={StocksPage} options={{title: "Validation du Stock"}}/>
+   </Stack.Navigator>
+   );
+ }
+
 export default function Router() {
   const [token, setToken] = useState()
   getTokenStorage().then(token => {setToken(token)})
-
+  
   let nav = (
     <Stack.Navigator initialRouteName="Home">
       <Stack.Screen name="Home" component={HomePage} options={{title: "Page d'accueil"}}/>
@@ -60,7 +70,7 @@ export default function Router() {
         />
         <Tab.Screen
           name="Profil"
-          component={ProfilePage}
+          component={ProfileStackScreen}
           options={{
             tabBarIcon: () => (
               <Icon name="user" size={24}  />

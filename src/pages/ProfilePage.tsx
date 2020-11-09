@@ -43,7 +43,17 @@ const ProfilePage = ({navigation}) => {
         console.error('Error clearing app data.');
     }
 }
-  if(loading && user){
+  if(loading && user && user.user_type == 1){
+    userInfo = (
+      <>
+        <Text style={styles.baseText}>Bonjour</Text>
+        <Text style={styles.nameText}>{user.firstname} {user.lastname}</Text>
+        <View style={{ marginTop: 50, marginBottom:50}}>
+        <Button title="Validation du stock" color="green" onPress={() => navigation.navigate('Stocks')} ></Button>
+        </View>
+      </>
+    );
+  }else if(loading && user){
     userInfo = (
       <>
         <Text style={styles.baseText}>Bonjour</Text>
