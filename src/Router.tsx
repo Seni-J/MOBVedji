@@ -12,7 +12,7 @@ import ProductDetailsPage from './pages/ProductDetailsPage';
 import StocksPage from './pages/StocksPage';
 import BasketPage from './pages/BasketPage';
 import {getTokenStorage, getUser} from './pages/data/UserData';
-import {BasketContainer} from './pages/data/containers';
+import {BasketContainer,StockContainer} from './pages/data/containers';
 
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
@@ -84,7 +84,9 @@ export default function Router() {
   return (
     <NavigationContainer>
       <BasketContainer.Provider>
+      <StockContainer.Provider>
       {nav}
+      </StockContainer.Provider>
       </BasketContainer.Provider>
     </NavigationContainer>
   );
