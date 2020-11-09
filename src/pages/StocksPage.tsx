@@ -49,7 +49,6 @@ const StocksPage = () => {
         }
     }
 
-
     return(
         <View>
         {products.length == 0 && stockContainer.stock.length >= 0 ? (
@@ -60,7 +59,7 @@ const StocksPage = () => {
                     );
                 })}
                 <Button title="Recommencer" color="red" onPress={() => {stockContainer.reload(); getProductList();}}></Button>
-                <Button title="Valider" color="green" onPress={() => stockContainer.validateNewStock()}></Button>
+                <Button title="Valider" color="green" onPress={() => stockContainer.validateNewStock(token)}></Button>
             </View>
         ): <Text></Text>  }
         {products.length <= 0  ? <ActivityIndicator/> : (
