@@ -24,7 +24,7 @@ const ProductDetailsPage = ({route,navigation}) => {
     return(
         <View>
         {product != null && !Object.keys(product).includes("error") ? (
-            <Card title={product.name} image={{uri:'http://192.168.1.125:8000/storage/pictures/'+ product.picture}}>
+            <Card title={product.name} image={{uri:'http://10.229.32.175:8000/storage/pictures/'+ product.picture}}>
                 <Text>{product.details}</Text>
                 <Text>{`stock: ${product.stock}, prix: ${product.price} CHF`}</Text>
                 <TouchableOpacity
